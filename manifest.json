@@ -11,12 +11,21 @@
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "store.png "
+      "type": "image.png "
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "store.png"
+      "type": "image.png"
+    }
+  ]
+}
+
+ "screenshots": [
+    {
+      "src": "screenshots/home.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg"
     }
   ]
 }
