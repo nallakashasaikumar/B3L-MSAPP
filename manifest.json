@@ -5,18 +5,13 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
-  "screenshots":[
-    {
-      "scr":"screenshots/home.jpg"
-      "sizes":"1280*720",
-      "type":"image/jpeg"
     }
   ]
   "icons": [
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "store.png"
+      "type": "store.png "
     },
     {
       "src": "/icon-512.png",
