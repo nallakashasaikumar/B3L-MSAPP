@@ -1,12 +1,13 @@
 {
   "name": "B3L-MSAPP",
   "short_name": "B3L-App",
+  "descripition":"The B3L online store app for easy shopping.",
   "start_url": "/B3L-MSAPP/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
-    }
-  ]
+    
+  
   "icons": [
     {
       "src": "/icon-192.png",
