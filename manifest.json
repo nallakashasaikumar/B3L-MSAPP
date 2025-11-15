@@ -1,7 +1,7 @@
 {
   "name": "B3L-MSAPP",
   "short_name": "B3L App",
-  "start_url": "/",
+  "start_url": "/B3LÃMS-APP/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
