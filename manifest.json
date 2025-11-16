@@ -1,25 +1,34 @@
 {
-  "name": "B3L-MSAPP",
-  "short_name": "B3L-App",
-  "descripition":"The B3L online store app for easy shopping.",
-  "start_url": "/B3L-MSAPP/index.html",
+  "name": "B3L-MSAPP Store",
+  "short_name": "B3L Store",
+  "id": "/?source=pwa",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#ffffff",
-    
-  
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "description": "A complete eCommerce app that runs as a PWA with search, categories, and user login.",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image.png "
+      "type": "image/png"
     },
     {
-      "src": "/icon-512.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image.png"
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/screen1.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "wide"
     }
   ]
 }
+
 
 
