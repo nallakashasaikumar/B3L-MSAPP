@@ -4,11 +4,12 @@
   "description": "A modern eCommerce PWA for buyers and sellers.",
   "lang": "en-IN",
   "dir": "ltr",
+  "orientation": "portrait",
   "start_url": "/B3L-MSAPP/index.html",
   "scope": "/B3L-MSAPP/",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen", "minimal-ui"],
-  "orientation": "portrait"
+  
   "background_color": "#ffffff",
   "theme_color": "#0f0f12",
 
