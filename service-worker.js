@@ -1,22 +1,20 @@
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open("v1").then(cache => {
+self.addEventListener("install", (e) => {
+  e.waitUntil(
+    caches.open("b3l-cache").then((cache) => {
       return cache.addAll([
-        "./",
-        "./index.html",
-        "./buyer_login.html",
-        "./buyer_signup.html",
-        "./manifest.json",
-        "./icons/icon-512.png"
+        "/B3L-MSAPP/",
+        "/B3L-MSAPP/index.html",
+        "/B3L-MSAPP/manifest.json",
+        "/B3L-MSAPP/icons/icon-512.png"
       ]);
     })
   );
 });
 
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
+self.addEventListener("fetch", (e) => {
+  e.respondWith(
+    caches.match(e.request).then((response) => {
+      return response || fetch(e.request);
     })
   );
 });
