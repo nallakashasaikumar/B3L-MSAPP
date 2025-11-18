@@ -38,14 +38,14 @@
 
   "screenshots": [
     {
-      "src": "/B3L-MSAPP/screenshots/screen1.png",
+      "src": "/B3L-MSAPP/screenshot/screen1.png",
       "sizes": "1024x1536",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Mobile UI Home Screen"
     },
     {
-      "src": "/B3L-MSAPP/screenshots/screen1.png",
+      "src": "/B3L-MSAPP/screenshot/screen1.png",
       "sizes": "1024x1536",
       "type": "image/png",
       "form_factor": "wide",
