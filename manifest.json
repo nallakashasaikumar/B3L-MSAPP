@@ -1,0 +1,66 @@
+{
+  "name": "B3L-MSAPP",
+  "short_name": "B3L",
+  "description": "A modern eCommerce PWA for buyers and sellers.",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "start_url": "/B3L-MSAPP/index.html",
+  "scope": "/B3L-MSAPP/",
+  "display": "standalone",
+  "display_override": ["standalone", "fullscreen", "minimal-ui"],
+  "background_color": "#ffffff",
+  "theme_color": "#0f0f12",
+
+  "categories": [
+    "shopping",
+    "business",
+    "productivity",
+    "utilities"
+  ],
+
+  "prefer_related_applications": false,
+
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.b3l.app",
+      "id": "com.b3l.app"
+    }
+  ],
+
+  "icons": [
+    {
+      "src": "/B3L-MSAPP/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+
+  "screenshots": [
+    {
+      "src": "/B3L-MSAPP/screenshot/screen1.png",
+      "sizes": "1024x1536",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile UI Home Screen"
+    },
+    {
+      "src": "/B3L-MSAPP/screenshot/screen1.png",
+      "sizes": "1024x1536",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop UI Homepage"
+    }
+  ],
+
+  "scope_extensions": [
+    {
+      "origin": "https://auth.b3lmsapp.com"
+    },
+    {
+      "origin": "https://en.b3lmsapp.com"
+    }
+  ],
+
+  "iarc_rating_id": "e1a8b2c9-4d00-4c1b-b9e4-123456789000"
+}
