@@ -1,8 +1,20 @@
-<!doctype html>
+<!doctype html
 <html lang="en">
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>B3LAMS — Buyer</title>
+ 
+ <link rel="manifest" href="manifest.json" />
+<link rel="icon" type="image/png" href="icons/icon-512.png">
+
+<meta name="theme-color" content="#ffffff">
+<!-- 
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+</script> -->
+
 <style>
 :root{--gold:#ffd86b;--bg:#070707;--card:#0f0f12}
 *{box-sizing:border-box;font-family:Inter,system-ui,Arial,sans-serif}
@@ -41,7 +53,7 @@ body{margin:0;background:linear-gradient(180deg,#050505,#0b0b0b);color:#fff;min-
 .similar{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
 .hidden{display:none}
 .footer{padding:20px;text-align:center;color:#b5a96d}
-@media(max-width:980px){.detail{grid-template-columns:1fr;margin-top:8px}.slide img{height:280px}}
+@media(max-width:flex){.detail{grid-template-columns:1fr;margin-top:8px}.slide img{height:280px}}
 </style>
 </head>
 <body>
@@ -162,7 +174,7 @@ function uniqueCategories(){
   return ['All',...cats];
 }
 function renderCategoryBar(){
-  categoryBar.innerHTML = uniqueCategories().map(c=>`<div class="cat" onclick="filterCat('${c}')">${c}</div>`).join('');
+  categoryBar.innerHTML = uniqueCategories().map(c=><div class="cat" onclick="filterCat('${c}')">${c}</div>).join('');
 }
 
 function renderGrid(list){
@@ -209,7 +221,7 @@ function openProduct(id){
 
   // reviews
   const reviews = (REVIEWS[p.id] || []).slice().reverse();
-  const reviewsHtml = reviews.map(r=>`<div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.03)"><strong>${r.userName}</strong> · ${r.rating} ★ <div class="small">${new Date(r.date).toLocaleString()}</div><div>${escapeHtml(r.text||'')}</div>${r.image?`<div style="margin-top:6px"><img src="${r.image}" style="max-width:180px;border-radius:6px"></div>`:''}</div>`).join('');
+  const reviewsHtml = reviews.map(r=><div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.03)"><strong>${r.userName}</strong> · ${r.rating} ★ <div class="small">${new Date(r.date).toLocaleString()}</div><div>${escapeHtml(r.text||'')}</div>${r.image?<div style="margin-top:6px"><img src="${r.image}" style="max-width:180px;border-radius:6px"></div>:''}</div>).join('');
 
   // detail layout
   document.getElementById('detailBox').innerHTML = `
@@ -245,8 +257,8 @@ function openProduct(id){
 
   // build thumbs and slideshow JS
   const slideContainer = document.getElementById('slideContainer');
-  slideContainer.innerHTML = `<img id="slideImg" src="${imgs[0]}" style="width:100%;height:420px;object-fit:contain;border-radius:8px"> <div class="nav" style="position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between"><button onclick="prevSlide()">‹</button><button onclick="nextSlide()">›</button></div>`;
-  const thumbs = document.getElementById('thumbs'); thumbs.innerHTML = imgs.map((u,i)=>`<img src="${u}" style="width:80px;height:80px;object-fit:cover;border-radius:6px;cursor:pointer" onclick="document.getElementById('slideImg').src='${u}';currentSlide=${i}">`).join('');
+  slideContainer.innerHTML = <img id="slideImg" src="${imgs[0]}" style="width:100%;height:420px;object-fit:contain;border-radius:8px"> <div class="nav" style="position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between"><button onclick="prevSlide()">‹</button><button onclick="nextSlide()">›</button></div>;
+  const thumbs = document.getElementById('thumbs'); thumbs.innerHTML = imgs.map((u,i)=><img src="${u}" style="width:80px;height:80px;object-fit:cover;border-radius:6px;cursor:pointer" onclick="document.getElementById('slideImg').src='${u}';currentSlide=${i}">).join('');
   // expose imgs and index for nav functions
   window._slideshowImgs = imgs; window.currentSlide = 0;
   window.prevSlide = function(){ window.currentSlide = window.currentSlide-1 < 0 ? window._slideshowImgs.length-1 : window.currentSlide-1; document.getElementById('slideImg').src = window._slideshowImgs[window.currentSlide]; }
@@ -254,7 +266,7 @@ function openProduct(id){
 
   // similar
   const similar = PRODUCTS.filter(x=>x.category === p.category && x.id!==p.id).slice(0,6);
-  document.getElementById('similar').innerHTML = similar.map(s=>`<div class="card" onclick="openProduct(${s.id})"><img src="${(s.images && s.images[0])||'https://via.placeholder.com/400'}"><div style="margin-top:6px"><strong>${s.name}</strong></div><div class="price">₹${s.price}</div></div>`).join('');
+  document.getElementById('similar').innerHTML = similar.map(s=><div class="card" onclick="openProduct(${s.id})"><img src="${(s.images && s.images[0])||'https://via.placeholder.com/400'}"><div style="margin-top:6px"><strong>${s.name}</strong></div><div class="price">₹${s.price}</div></div>).join('');
 }
 
 /* Cart */
@@ -268,13 +280,13 @@ function updateCartUI(){ document.getElementById('cartCount').textContent = CART
 function openCart(){
   hideAllSections(); document.getElementById('cartView').classList.remove('hidden');
   const items = PRODUCTS.filter(p=>CART.includes(p.id));
-  document.getElementById('cartList').innerHTML = items.map(it=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images&&it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="small">₹${it.price}</div></div><div style="margin-left:auto"><button class="btn" onclick="removeFromCart(${it.id})">Remove</button></div></div>`).join('') || '<p class="small">Cart empty</p>';
+  document.getElementById('cartList').innerHTML = items.map(it=><div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images&&it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="small">₹${it.price}</div></div><div style="margin-left:auto"><button class="btn" onclick="removeFromCart(${it.id})">Remove</button></div></div>).join('') || '<p class="small">Cart empty</p>';
 }
 function removeFromCart(id){ CART = CART.filter(x=>x!==id); persistBuyer(); openCart(); updateCartUI(); }
 
 // /* wishlist */
 // function toggleWish(id){ if(WISHLIST.includes(id)) WISHLIST = WISHLIST.filter(x=>x!==id); else WISHLIST.push(id); persistBuyer(); alert(WISHLIST.includes(id)?'Added to wishlist':'Removed from wishlist'); }
-// function openWishlist(){ hideAllSections(); document.getElementById('wishView').classList.remove('hidden'); const list = PRODUCTS.filter(p=>WISHLIST.includes(p.id)); document.getElementById('wishList').innerHTML = list.map(it=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images&&it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="price">₹${it.price}</div></div></div>`).join('') || '<p class="small">Wishlist empty</p>'; }
+// function openWishlist(){ hideAllSections(); document.getElementById('wishView').classList.remove('hidden'); const list = PRODUCTS.filter(p=>WISHLIST.includes(p.id)); document.getElementById('wishList').innerHTML = list.map(it=><div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images&&it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="price">₹${it.price}</div></div></div>).join('') || '<p class="small">Wishlist empty</p>'; }
 
 /* wishlist */
 function toggleWish(id){
@@ -283,7 +295,7 @@ function toggleWish(id){
   persistBuyer();
   alert(WISHLIST.includes(id)?'Added to wishlist':'Removed from wishlist');
 }
-function openWishlist(){ hideAllSections(); document.getElementById('wishView').classList.remove('hidden'); const list = PRODUCTS.filter(p=>WISHLIST.includes(p.id)); document.getElementById('wishList').innerHTML = list.map(it=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${it.image}" style="width:120px"><div><strong>${it.name}</strong><div class="price">₹${it.price}</div></div></div>`).join('') || '<p class="small">Wishlist empty</p>'; }
+function openWishlist(){ hideAllSections(); document.getElementById('wishView').classList.remove('hidden'); const list = PRODUCTS.filter(p=>WISHLIST.includes(p.id)); document.getElementById('wishList').innerHTML = list.map(it=><div class="card" style="display:flex;gap:12px;align-items:center"><img src="${it.image}" style="width:120px"><div><strong>${it.name}</strong><div class="price">₹${it.price}</div></div></div>).join('') || '<p class="small">Wishlist empty</p>'; }
 
 /* profile */
 function openProfile(){ hideAllSections(); document.getElementById('profileView').classList.remove('hidden'); renderProfile(); }
@@ -413,7 +425,18 @@ window.addEventListener('storage', (e)=>{
     PRODUCTS = JSON.parse(localStorage.getItem(KEY_PRODUCTS)||'[]');
     renderGrid(PRODUCTS);
   }
-});
+
+
+
+  
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service worker registered"))
+    .catch(err => console.log("SW registration failed", err));
+}
+
+
+
 </script>
 </body>
 </html>
