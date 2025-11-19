@@ -379,13 +379,14 @@ window.addEventListener('storage', (e)=>{
   }
 
   /* storage listener: admin changes */
-window.addEventListener('storage', (e)=>{
-  if(e.key === KEY_PRODUCTS || e.key === 'b3_sync'){
-    PRODUCTS = JSON.parse(localStorage.getItem(KEY_PRODUCTS)||'[]');
-    renderGrid(PRODUCTS);
-  }
+// window.addEventListener('storage', (e)=>{
+//   if(e.key === KEY_PRODUCTS || e.key === 'b3_sync'){
+//     PRODUCTS = JSON.parse(localStorage.getItem(KEY_PRODUCTS)||'[]');
+//     renderGrid(PRODUCTS);
+//   }
 });
 </script>
 </body>
 </html>
+
 
