@@ -376,8 +376,16 @@ window.addEventListener('storage', (e)=>{
     PRODUCTS = JSON.parse(localStorage.getItem(KEY_PRODUCTS)||'[]');
     renderGrid(PRODUCTS);
   }
+  
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js")
+    .then(() => console.log("Service Worker Registered"))
+    .catch((error) => console.log("SW Registration Failed:", error));
+}
+
 });
 </script>
 </body>
 </html>
+
 
