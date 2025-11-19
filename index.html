@@ -2,63 +2,379 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>B3LAMS — Buyer Login</title>
+<title>B3LAMS — Buyer</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ffffff">
 <style>
-:root{--gold:#ffd86b;--card:#0f0f12}
+:root{--gold:#ffd86b;--bg:#070707;--card:#0f0f12}
 *{box-sizing:border-box;font-family:Inter,system-ui,Arial,sans-serif}
-body{margin:0;display:flex;align-items:center;justify-content:center;height:100vh;background:linear-gradient(180deg,#050505,#0b0b0b);color:#fff}
-.card{width:420px;max-width:92vw;padding:22px;border-radius:12px;background:var(--card);border:1px solid rgba(255,216,107,0.04)}
-h1{color:var(--gold);text-align:center;margin-bottom:12px}
-input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #222;background:#0d0d0d;color:#fff}
-button{width:100%;padding:10px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--gold),#f3a847);color:#111;font-weight:700}
-.small{color:#c9b777;text-align:center;margin-top:8px}
-a{color:var(--gold)}
+body{margin:0;background:linear-gradient(180deg,#050505,#0b0b0b);color:#fff;min-height:100vh}
+.topbar{display:flex;align-items:center;gap:12px;padding:14px 18px;background:#0f0f11;border-bottom:1px solid rgba(255,216,107,0.04);position:sticky;top:0;z-index:60}
+.brand{display:flex;flex-direction:column}
+.brand .logo{font-weight:800;color:var(--gold);font-size:18px}
+.brand .title{font-weight:700;color:#fff;font-size:14px}
+.search{flex:1;display:flex;align-items:center;gap:8px;margin:0 12px}
+.search input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:#0b0b0b;color:#fff}
+.search button{padding:10px 12px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--gold),#f3a847);color:#111;font-weight:700}
+.header-actions{display:flex;gap:10px;align-items:center}
+.header-actions button{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer}
+.header-actions .cart{border:1px solid rgba(255,216,107,0.12);color:var(--gold)}
+.container{max-width:1150px;margin:18px auto;padding:0 14px}
+.category-bar{display:flex;gap:12px;margin:12px 0;flex-wrap:wrap}
+
+.hero{margin:18px 0;padding:18px;border-radius:16px;background:linear-gradient(180deg,rgb(122, 70, 70), #f0eded);box-shadow:0 6px 20px rgba(15,23,36,0.03);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cat{padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.card{background:var(--card);border-radius:12px;padding:10px;border:1px solid rgba(255,255,255,0.03)}
+.card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+.price{color:var(--gold);font-weight:800}
+.actions{display:flex;gap:8px;margin-top:8px}
+.btn{padding:8px 10px;border-radius:8px;border:none;cursor:pointer}
+.btn.primary{background:linear-gradient(90deg,var(--gold),#f3a847);color:#111;font-weight:700}
+.detail{display:grid;grid-template-columns:440px 1fr;gap:18px;margin-top:12px}
+.slide{position:relative;background:#070707;border-radius:12px;padding:8px}
+.slide img{width:100%;height:420px;object-fit:contain;border-radius:8px;background:#040404}
+.slide .nav{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between}
+.slide .nav button{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.06);color:#fff;padding:8px;border-radius:6px}
+.similar{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.hidden{display:none}
+.footer{padding:20px;text-align:center;color:#b5a96d}
+@media(max-width:980px){.detail{grid-template-columns:1fr;margin-top:8px}.slide img{height:280px}}
 </style>
 </head>
 <body>
-  <div class="card">
-    <h1>B3LAMS — Buyer Login</h1>
-    <input id="identity" placeholder="Email or Phone" />
-    <input id="password" type="password" placeholder="Password" />
-    <button onclick="doLogin()">Login</button>
-    <p class="small"><a href="buyer_signup.html">Create account</a> • <a href="#" onclick="forgot()">Forgot</a></p>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">B3LAMS</div>
+      <div class="title">BHARATH ECOMMERCE LARGEST MEGA SHOP</div>
+    </div>
+    <div class="search">
+      <input id="q" placeholder="Search products, categories..." oninput="doSearch()">
+      <button onclick="doSearch()">Search</button>
+    </div>
+    <div class="header-actions">
+      <button onclick="filterCat('All')">All</button>
+      <button onclick="filterCat('Mobiles')">Mobiles</button>
+      <button onclick="filterCat('Electronics')">Electronics</button>
+      <button onclick="filterCat('Fashion')">Fashion</button>
+      <button onclick="filterCat('Home')">Home</button>
+      <button onclick="filterCat('Accessories')">Accessories</button>
+      <button onclick="filterCat('Kids')">Kids</button>
+      <button onclick="openWishlist()">Wishlist</button>
+      <button class="cart" onclick="openCart()">Cart (<span id="cartCount">0</span>)</button>
+      <button onclick="openProfile()">Profile</button>
+    </div>
   </div>
 
-<script>
-function doLogin(){
-  const id=document.getElementById('identity').value.trim();
-  const p=document.getElementById('password').value;
-  if(!id||!p) return alert('Enter credentials');
-  const buyers = JSON.parse(localStorage.getItem('b3_buyers')||'[]');
-  const b = buyers.find(u => (u.email.toLowerCase()===id.toLowerCase() || u.phone===id) && u.password === p);
-  if(!b) return alert('Invalid credentials');
-  localStorage.setItem('b3_currentBuyer', JSON.stringify(b));
-  alert('Logged in');
-  location.href = 'index.html';
-} 
+<main class="container">
+  <section class="category-bar" id="categoryBar"></section>
 
-function forgot(){
-  const email = prompt('Enter your registered email (demo OTP will display)');
-  if(!email) return;
-  const buyers = JSON.parse(localStorage.getItem('b3_buyers') || '[]');
-  const b = buyers.find(x => x.email && x.email.toLowerCase() === email.toLowerCase());
-  if(!b) return alert('No account found');
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  sessionStorage.setItem('b3_otp', otp);
-  alert('Demo OTP: ' + otp);
-  const input = prompt('Enter OTP to reset password');
-  if(input !== otp) return alert('Invalid OTP');
-  const np = prompt('Enter new password (min 8, 1 uppercase, 2 digits, 1 special)');
-  if(!np) return alert('No password');
-  if(!(np.length>=8 && /[A-Z]/.test(np) && (np.match(/\d/g)||[]).length>=2 && /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(np))) return alert('Password not strong');
-  b.password = np;
-  const all = buyers.map(x => x.email === b.email ? b : x);
-  localStorage.setItem('b3_buyers', JSON.stringify(all));
-  alert('Password reset — please login with new password');
+  <section class="hero">
+    <div>
+      <h1>Shop everything — great deals, delivered fast</h1>
+      <p class="small"> Buy the products • Admin: <span style="font-family:monospace">SAIKUMAR</span></p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+      <div class="kicker"> Refer Your friends</div>
+      <div style="font-size:22px;color:var(--muted)">Open it and buy product fast! </div>
+    </div>
+  </section>
+
+  <section id="listView">
+    <h2 style="color:var(--gold)">All Products</h2>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <section id="productView" class="hidden">
+    <button onclick="backToList()">← Back</button>
+    <div id="detailBox" class="detail"></div>
+    <h3 style="color:var(--gold);margin-top:12px">Similar products</h3>
+    <div id="similar" class="similar"></div>
+  </section>
+
+  <section id="wishView" class="hidden">
+    <h2 style="color:var(--gold)">Wishlist</h2>
+    <div id="wishList"></div>
+  </section>
+
+  <section id="cartView" class="hidden">
+    <h2 style="color:var(--gold)">Your Cart</h2>
+    <div id="cartList"></div>
+    <div style="margin-top:12px"><button class="btn primary" onclick="checkout()">Place Order (Simulated)</button></div>
+  </section>
+
+  <section id="profileView" class="hidden">
+    <h2 style="color:var(--gold)">Profile</h2>
+    <div id="profileBox" class="card"></div>
+  </section>
+
+  <footer class="footer">© 2025 B3LAMS — Demo (all data stored in browser)</footer>
+</main>
+
+<script>
+/* Keys */
+const KEY_PRODUCTS = 'b3_products';
+const KEY_BUYERS = 'b3_buyers';
+const KEY_CUR = 'b3_currentBuyer';
+const KEY_REV = 'b3_reviews';
+const KEY_ORD = 'b3_orders';
+
+/* Seed demo products only if empty (admin will normally set) */
+if(!localStorage.getItem(KEY_PRODUCTS)){
+  const demo = [
+    { id:11101, name:'Smartphone Alpha', category:'Mobiles', price:19999, images:['https://via.placeholder.com/800x600?text=Smartphone+Alpha'], link:'https://www.flipkart.com' },
+    { id:11102, name:'Wireless Earbuds', category:'Electronics', price:2499, images:['https://via.placeholder.com/800x600?text=Earbuds'], link:'https://www.amazon.in' }
+  ];
+  localStorage.setItem(KEY_PRODUCTS, JSON.stringify(demo));
 }
+
+/* session */
+const currentBuyer = JSON.parse(localStorage.getItem(KEY_CUR) || 'null');
+if(!currentBuyer){ alert('Please login to continue'); location.href='buyer_login.html'; }
+
+let PRODUCTS = JSON.parse(localStorage.getItem(KEY_PRODUCTS) || '[]');
+let REVIEWS = JSON.parse(localStorage.getItem(KEY_REV) || '{}');
+let CART = (currentBuyer.cart || []);
+let WISHLIST = (currentBuyer.wishlist || []);
+
+/* UI refs */
+const grid = document.getElementById('grid');
+const cartCountEl = document.getElementById('cartCount');
+const categoryBar = document.getElementById('categoryBar');
+
+function uniqueCategories(){
+  const cats = [...new Set(PRODUCTS.map(p=>p.category || 'Misc'))];
+  return ['All',...cats];
+}
+function renderCategoryBar(){
+  categoryBar.innerHTML = uniqueCategories().map(c=>`<div class="cat" onclick="filterCat('${c}')">${c}</div>`).join('');
+}
+
+function renderGrid(list){
+  // show list view
+  document.getElementById('listView').classList.remove('hidden');
+  document.getElementById('productView').classList.add('hidden');
+  document.getElementById('cartView').classList.add('hidden');
+  document.getElementById('wishView').classList.add('hidden');
+  document.getElementById('profileView').classList.add('hidden');
+
+  if(!list.length){ grid.innerHTML = '<p class="small">No products</p>'; return; }
+  grid.innerHTML = list.map(p=>`<div class="card">
+    <img src="${(p.images && p.images[0]) || 'https://via.placeholder.com/400x300?text=Product'}" alt="${p.name}" onclick="openProduct(${p.id})">
+    <div style="margin-top:8px"><strong>${p.name}</strong></div>
+    <div class="small">${p.category || 'Misc'}</div>
+    <div class="price">₹${p.price}</div>
+    <div class="actions">
+      <button class="btn primary" onclick="buyNow('${encodeURI(p.link || '#')}')">Buy</button>
+      <button class="btn" onclick="addToCart(${p.id})">Add</button>
+      <button class="btn" onclick="toggleWish(${p.id})">${WISHLIST.includes(p.id)?'♥':'♡'}</button>
+    </div>
+  </div>`).join('');
+  renderCategoryBar();
+  updateCartUI();
+}
+
+/* Product detail (Flipkart-style) */
+function openProduct(id){
+  const p = PRODUCTS.find(x=>x.id==id); if(!p) return alert('Product not found');
+  hideAllSections(); document.getElementById('productView').classList.remove('hidden');
+
+  // slideshow images
+  const imgs = p.images && p.images.length ? p.images : ['https://via.placeholder.com/800x600?text=Product'];
+  document.getElementById('detailBox').innerHTML = `
+    <div>
+      <div class="slide" id="slideContainer">
+        <img id="slideImg" src="${imgs[0]}" style="width:100%;height:420px;object-fit:contain;border-radius:8px">
+        <div class="nav" style="position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between">
+          <button onclick="prevSlide()">‹</button>
+          <button onclick="nextSlide()">›</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px" id="thumbs"></div>
+    </div>
+    <div>
+      <h2>${p.name}</h2>
+      <div class="small">${p.category || 'Misc'}</div>
+      <h3 class="price">₹${p.price}</h3>
+      <p class="small">${p.description || ''}</p>
+      <div style="margin-top:12px;display:flex;gap:8px;">
+        <button class="btn primary" onclick="buyNow('${encodeURI(p.link || '#')}')">Buy on Store</button>
+        <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
+        <button class="btn" onclick="toggleWish(${p.id})">${WISHLIST.includes(p.id)?'Remove Wishlist':'Add Wishlist'}</button>
+      </div>
+      <div style="margin-top:18px">
+        <h4>Reviews</h4>
+        <div id="reviewsArea" class="small"></div>
+      </div>
+    </div>
+  `;
+
+  // thumbs
+  const thumbs = document.getElementById('thumbs');
+  thumbs.innerHTML = imgs.map((u,i)=>`<img src="${u}" style="width:80px;height:80px;object-fit:cover;border-radius:6px;cursor:pointer" onclick="document.getElementById('slideImg').src='${u}';currentSlide=${i}">`).join('');
+  window._slideshowImgs = imgs; window.currentSlide = 0;
+  window.prevSlide = function(){ window.currentSlide = window.currentSlide-1 < 0 ? window._slideshowImgs.length-1 : window.currentSlide-1; document.getElementById('slideImg').src = window._slideshowImgs[window.currentSlide]; }
+  window.nextSlide = function(){ window.currentSlide = (window.currentSlide+1) % window._slideshowImgs.length; document.getElementById('slideImg').src = window._slideshowImgs[window.currentSlide]; }
+
+  const similar = PRODUCTS.filter(x=>x.category === p.category && x.id!==p.id).slice(0,6);
+  document.getElementById('similar').innerHTML = similar.map(s=>`<div class="card" onclick="openProduct(${s.id})"><img src="${(s.images && s.images[0])||'https://via.placeholder.com/400'}"><div style="margin-top:6px"><strong>${s.name}</strong></div><div class="price">₹${s.price}</div></div>`).join('');
+  // show reviews
+  const reviews = (REVIEWS[p.id] || []).slice().reverse();
+  document.getElementById('reviewsArea').innerHTML = reviews.length ? reviews.map(r=>`<div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.03)"><strong>${r.userName}</strong> · ${r.rating} ★ <div class="small">${new Date(r.date).toLocaleString()}</div><div>${escapeHtml(r.text||'')}</div>${r.image?`<div style="margin-top:6px"><img src="${r.image}" style="max-width:180px;border-radius:6px"></div>`:''}</div>`).join('') : '<p class="small">No reviews yet</p>';
+}
+
+/* Cart */
+function addToCart(id){
+  if(!CART.includes(id)) CART.push(id);
+  persistBuyer();
+  updateCartUI();
+  alert('Added to cart');
+}
+function updateCartUI(){ document.getElementById('cartCount').textContent = CART.length || 0; }
+function openCart(){
+  hideAllSections(); document.getElementById('cartView').classList.remove('hidden');
+  const items = PRODUCTS.filter(p=>CART.includes(p.id));
+  document.getElementById('cartList').innerHTML = items.map(it=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images&&it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="small">₹${it.price}</div></div><div style="margin-left:auto"><button class="btn" onclick="removeFromCart(${it.id})">Remove</button></div></div>`).join('') || '<p class="small">Cart empty</p>';
+}
+function removeFromCart(id){ CART = CART.filter(x=>x!==id); persistBuyer(); openCart(); updateCartUI(); }
+
+/* wishlist */
+function toggleWish(id){
+  if(WISHLIST.includes(id)) WISHLIST = WISHLIST.filter(x=>x!==id);
+  else WISHLIST.push(id);
+  persistBuyer();
+  alert(WISHLIST.includes(id)?'Added to wishlist':'Removed from wishlist');
+}
+function openWishlist(){ hideAllSections(); document.getElementById('wishView').classList.remove('hidden'); const list = PRODUCTS.filter(p=>WISHLIST.includes(p.id)); document.getElementById('wishList').innerHTML = list.map(it=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images && it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="price">₹${it.price}</div></div></div>`).join('') || '<p class="small">Wishlist empty</p>'; }
+
+/* profile */
+function openProfile(){ hideAllSections(); document.getElementById('profileView').classList.remove('hidden'); renderProfile(); }
+function renderProfile(){
+  const me = JSON.parse(localStorage.getItem(KEY_CUR)||'null');
+  if(!me) return location.href='buyer_login.html';
+  document.getElementById('profileBox').innerHTML = `<div style="max-width:720px">
+    <p><b>Name</b><br><input id="pf_name" value="${escapeHtml(me.name)}"></p>
+    <p><b>Email</b><br><input id="pf_email" value="${escapeHtml(me.email)}"></p>
+    <p><b>Phone</b><br><input id="pf_phone" value="${escapeHtml(me.phone)}"></p>
+    <p><b>Address</b><br><textarea id="pf_addr">${escapeHtml(me.address||'')}</textarea></p>
+    <p><b>Referral ID</b><br><span class="small">${me.ref||'—'}</span> <button onclick="copyRef()">Copy</button></p>
+    <p><b>Change Password</b><br><input id="pf_oldpw" type="password" placeholder="Old password"><input id="pf_newpw" type="password" placeholder="New password"></p>
+    <div style="margin-top:8px"><button class="btn primary" onclick="saveProfile()">Save</button> <button class="btn" onclick="logout()">Logout</button></div>
+  </div>`;
+}
+function copyRef(){ const me = JSON.parse(localStorage.getItem(KEY_CUR)); navigator.clipboard?.writeText(me.ref || '')?.then(()=>alert('Copied')); }
+
+function saveProfile(){
+  const me = JSON.parse(localStorage.getItem(KEY_CUR)||'null');
+  const newName = document.getElementById('pf_name').value.trim();
+  const newEmail = document.getElementById('pf_email').value.trim();
+  const newPhone = document.getElementById('pf_phone').value.trim();
+  const newAddr = document.getElementById('pf_addr').value.trim();
+  const oldPw = document.getElementById('pf_oldpw').value;
+  const newPw = document.getElementById('pf_newpw').value;
+  if(newPhone && !/^\d{10}$/.test(newPhone)) return alert('Phone must be 10 digits');
+  if(oldPw || newPw){
+    if(!oldPw || !newPw) return alert('Provide both old and new password to change');
+    if(me.password !== oldPw) return alert('Old password incorrect');
+    if(!(newPw.length>=8 && /[A-Z]/.test(newPw) && (newPw.match(/\d/g)||[]).length>=2 && /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(newPw))) return alert('New password not strong');
+    me.password = newPw;
+  }
+  me.name = newName; me.email = newEmail; me.phone = newPhone; me.address = newAddr;
+  let buyers = JSON.parse(localStorage.getItem(KEY_BUYERS)||'[]');
+  const idx = buyers.findIndex(b=>b.id===me.id);
+  if(idx>-1) buyers[idx]=me; else buyers.push(me);
+  localStorage.setItem(KEY_BUYERS, JSON.stringify(buyers));
+  localStorage.setItem(KEY_CUR, JSON.stringify(me));
+  alert('Profile saved');
+}
+
+/* reviews */
+function submitReview(productId){
+  const rating = parseInt(document.getElementById('revRating').value||5,10);
+  const text = document.getElementById('revText').value.trim();
+  const file = document.getElementById('revImage').files[0];
+  const user = JSON.parse(localStorage.getItem(KEY_CUR) || 'null');
+  if(!user) return alert('Login to review');
+  if(file){
+    const fr = new FileReader();
+    fr.onload = e => addReview(productId, rating, text, e.target.result);
+    fr.readAsDataURL(file);
+  } else addReview(productId, rating, text, null);
+}
+function addReview(productId, rating, text, image){
+  const reviews = JSON.parse(localStorage.getItem(KEY_REV)||'{}');
+  reviews[productId] = reviews[productId] || [];
+  reviews[productId].push({ userName: JSON.parse(localStorage.getItem(KEY_CUR)).name, rating, text, image, date: new Date().toISOString()});
+  localStorage.setItem(KEY_REV, JSON.stringify(reviews));
+  openProduct(productId);
+}
+
+/* buy & checkout */
+function buyNow(link){
+  // open external store link in new tab/window
+  if(!link || link === '#') return alert('No external link set for this product');
+  // open original app / store
+  try{ window.open(decodeURI(link), '_blank'); } catch(e){ window.open(link, '_blank'); }
+}
+function checkout(){
+  if(!CART.length) return alert('Cart empty');
+  const me = JSON.parse(localStorage.getItem(KEY_CUR));
+  const items = PRODUCTS.filter(p=>CART.includes(p.id)).map(p=>({ id:p.id, title:p.name, price:p.price }));
+  const order = { id:'o_'+Date.now(), date:new Date().toISOString(), items, total: items.reduce((s,i)=>s+i.price,0), buyerId:me.id, buyerName:me.name, buyerEmail:me.email };
+  let orders = JSON.parse(localStorage.getItem(KEY_ORD)||'[]'); orders.push(order); localStorage.setItem(KEY_ORD, JSON.stringify(orders));
+  me.orders = me.orders || []; me.orders.push(order); me.cart = []; CART=[]; persistBuyer();
+  alert('Order placed (simulated). Order id: '+order.id);
+  openProfile();
+}
+
+/* helpers */
+function hideAllSections(){ document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden')); }
+function backToList(){ document.getElementById('listView').classList.remove('hidden'); document.getElementById('productView').classList.add('hidden'); }
+function filterCat(c){ if(c==='All') renderGrid(PRODUCTS); else renderGrid(PRODUCTS.filter(p=> (p.category||'').toLowerCase()===c.toLowerCase())); }
+function doSearch(){ const q=document.getElementById('q').value.trim().toLowerCase(); if(!q) return renderGrid(PRODUCTS); renderGrid(PRODUCTS.filter(p => (p.name+' '+(p.category||'')+' '+(p.description||'')).toLowerCase().includes(q))); }
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+/* persist buyer */
+function persistBuyer(){
+  let me = JSON.parse(localStorage.getItem(KEY_CUR)||'null');
+  if(!me) return;
+  me.cart = CART;
+  me.wishlist = WISHLIST;
+  let buyers = JSON.parse(localStorage.getItem(KEY_BUYERS)||'[]');
+  const idx = buyers.findIndex(b=>b.id===me.id);
+  if(idx>-1){ buyers[idx]=me; } else { buyers.push(me); }
+  localStorage.setItem(KEY_BUYERS, JSON.stringify(buyers));
+  localStorage.setItem(KEY_CUR, JSON.stringify(me));
+  // small key to notify cross-tab changes
+  localStorage.setItem('b3_sync', Date.now());
+}
+
+/* remove */
+function removeFromCart(id){ CART = CART.filter(x=>x!==id); persistBuyer(); openCart(); updateCartUI(); }
+
+/* logout */
+function logout(){ localStorage.removeItem(KEY_CUR); alert('Logged out'); location.href='buyer_login.html'; }
+
+/* init */
+function loadState(){
+  PRODUCTS = JSON.parse(localStorage.getItem(KEY_PRODUCTS)||'[]');
+  REVIEWS = JSON.parse(localStorage.getItem(KEY_REV)||'{}');
+  let cur = JSON.parse(localStorage.getItem(KEY_CUR)||'null'); if(!cur) { alert('Please login'); location.href='buyer_login.html'; return; }
+  CART = cur.cart || []; WISHLIST = cur.wishlist || [];
+  renderGrid(PRODUCTS);
+  renderCategoryBar();
+  updateCartUI();
+}
+loadState();
+
+/* storage listener: admin changes */
+window.addEventListener('storage', (e)=>{
+  // admin or other tab changed products
+  if(e.key === KEY_PRODUCTS || e.key === 'b3_sync'){
+    PRODUCTS = JSON.parse(localStorage.getItem(KEY_PRODUCTS)||'[]');
+    renderGrid(PRODUCTS);
+  }
+});
 </script>
 </body>
 </html>
-
-
-
