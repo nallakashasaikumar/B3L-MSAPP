@@ -1,17 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>B3LAMS — Buyer Signup</title>
 <style>
 :root{--gold:#ffd86b;--card:#0f0f12}
 *{box-sizing:border-box;font-family:Inter,system-ui,Arial,sans-serif}
 body{margin:0;display:flex;align-items:center;justify-content:center;height:100vh;background:linear-gradient(180deg,#050505,#0b0b0b);color:#fff}
-.card{width:420px;padding:22px;border-radius:12px;background:var(--card);border:1px solid rgba(255,216,107,0.04)}
+.card{width:420px;max-width:92vw;padding:22px;border-radius:12px;background:var(--card);border:1px solid rgba(255,216,107,0.04)}
 h1{color:var(--gold);text-align:center;margin:0 0 12px}
 input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #222;background:#0d0d0d;color:#fff}
 button{width:100%;padding:10px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--gold),#f3a847);color:#111;font-weight:700}
 .small{color:#c9b777;text-align:center;margin-top:8px}
+a{color:var(--gold)}
 </style>
 </head>
 <body>
@@ -21,11 +23,13 @@ button{width:100%;padding:10px;border-radius:8px;border:none;background:linear-g
     <input id="email" placeholder="Email (gmail preferred)" />
     <input id="phone" placeholder="Phone (10 digits)" />
     <input id="password" type="password" placeholder="Password (min 8, 1 uppercase, 2 digits, 1 special)" />
+    <input id="refcode" placeholder="Referral code (optional)" />
     <button onclick="doSignup()">Signup & Continue</button>
-    <p class="small">Already have account? <a href="buyer_login.html" style="color:var(--gold)">Login</a></p>
+    <p class="small">Already have account? <a href="buyer_login.html">Login</a></p>
   </div>
 
 <script>
+/* simple password validator (same rules you used) */
 function validPassword(p){
   if(!p || p.length < 8) return false;
   if(!/[A-Z]/.test(p)) return false;
@@ -33,24 +37,44 @@ function validPassword(p){
   if(!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(p)) return false;
   return true;
 }
+
 function doSignup(){
-  const name=document.getElementById('name').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const phone=document.getElementById('phone').value.trim();
-  const password=document.getElementById('password').value;
-  if(!name||!email||!phone||!password) return alert('Fill all fields');
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const password = document.getElementById('password').value;
+  const usedRef = document.getElementById('refcode').value.trim();
+
+  if(!name || !email || !phone || !password) return alert('Fill all fields');
   if(!/^\d{10}$/.test(phone)) return alert('Phone must be 10 digits');
   if(!validPassword(password)) return alert('Password must be ≥8 chars, 1 uppercase, 2 digits, 1 special char');
-  let buyers = JSON.parse(localStorage.getItem('b3_buyers')||'[]');
-  if(buyers.find(b=>b.email.toLowerCase()===email.toLowerCase())) return alert('Email already registered');
-  const buyer = { id:'b_'+Date.now(), name, email, phone, password, address:'', wishlist:[], cart:[], orders:[], ref:'REF'+Math.floor(100000+Math.random()*900000) };
+
+  const BUYERS_KEY = 'b3_buyers';
+  let buyers = JSON.parse(localStorage.getItem(BUYERS_KEY) || '[]');
+
+  if(buyers.find(b => b.email.toLowerCase() === email.toLowerCase())) return alert('Email already registered');
+
+  // generate unique referral id (no money, just code)
+  const myRef = 'REF' + Math.floor(100000 + Math.random() * 900000);
+
+  const buyer = {
+    id: 'b_' + Date.now(),
+    name, email, phone, password,
+    address: '',
+    wishlist: [],
+    cart: [],
+    orders: [],
+    ref: myRef,
+    usedRef: usedRef || ''
+  };
+
   buyers.push(buyer);
-  localStorage.setItem('b3_buyers', JSON.stringify(buyers));
+  localStorage.setItem(BUYERS_KEY, JSON.stringify(buyers));
   localStorage.setItem('b3_currentBuyer', JSON.stringify(buyer));
+
   alert('Signup successful — you are logged in');
-  location.href='buyer_login.html';
+  location.href = 'index.html';
 }
 </script>
 </body>
 </html>
- 
