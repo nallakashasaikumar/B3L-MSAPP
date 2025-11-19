@@ -26,16 +26,16 @@ a{color:var(--gold)}
 
 <script>
 function doLogin(){
-  const id = document.getElementById('identity').value.trim();
-  const p = document.getElementById('password').value;
-  if(!id || !p) return alert('Enter credentials');
-  const buyers = JSON.parse(localStorage.getItem('b3_buyers') || '[]');
-  const b = buyers.find(u => ((u.email && u.email.toLowerCase() === id.toLowerCase()) || u.phone === id) && u.password === p);
+  const id=document.getElementById('identity').value.trim();
+  const p=document.getElementById('password').value;
+  if(!id||!p) return alert('Enter credentials');
+  const buyers = JSON.parse(localStorage.getItem('b3_buyers')||'[]');
+  const b = buyers.find(u => (u.email.toLowerCase()===id.toLowerCase() || u.phone===id) && u.password === p);
   if(!b) return alert('Invalid credentials');
   localStorage.setItem('b3_currentBuyer', JSON.stringify(b));
   alert('Logged in');
   location.href = 'index.html';
-}
+} 
 
 function forgot(){
   const email = prompt('Enter your registered email (demo OTP will display)');
@@ -59,3 +59,4 @@ function forgot(){
 </script>
 </body>
 </html>
+
