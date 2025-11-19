@@ -5,8 +5,8 @@
   "lang": "en-IN",
   "dir": "ltr",
   "orientation": "portrait",
-  "start_url": "/B3L-MSAPP/index.html/",
-  "scope": "/B3L-MSAPP/",
+  "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen", "minimal-ui"],
   
