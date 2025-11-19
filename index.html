@@ -1,22 +1,10 @@
-<!doctype html
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>B3LAMS — Buyer</title>
- 
- <link rel="manifest" href="manifest.json" />
-<link rel="icon" type="image/png" href="icons/icon-512.png">
- <link rel="screen1" type="image/png" href="screenshot/screen1.png">
- <scrip src="service-worker.js"</script>
-
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ffffff">
-<!-- 
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
-</script> -->
-
 <style>
 :root{--gold:#ffd86b;--bg:#070707;--card:#0f0f12}
 *{box-sizing:border-box;font-family:Inter,system-ui,Arial,sans-serif}
@@ -34,11 +22,7 @@ body{margin:0;background:linear-gradient(180deg,#050505,#0b0b0b);color:#fff;min-
 .container{max-width:1150px;margin:18px auto;padding:0 14px}
 .category-bar{display:flex;gap:12px;margin:12px 0;flex-wrap:wrap}
 
- .hero{
-  margin:18px 0;padding:18px;border-radius:16px;background:linear-gradient(180deg,rgb(122, 70, 70), #f0eded);
-  box-shadow: 0 6px 20px rgba(15,23,36,0.03); display:flex;align-items:center;justify-content:space-between;gap:12px;
-} 
-
+.hero{margin:18px 0;padding:18px;border-radius:16px;background:linear-gradient(180deg,rgb(122, 70, 70), #f0eded);box-shadow:0 6px 20px rgba(15,23,36,0.03);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .cat{padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
 .card{background:var(--card);border-radius:12px;padding:10px;border:1px solid rgba(255,255,255,0.03)}
@@ -55,7 +39,7 @@ body{margin:0;background:linear-gradient(180deg,#050505,#0b0b0b);color:#fff;min-
 .similar{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
 .hidden{display:none}
 .footer{padding:20px;text-align:center;color:#b5a96d}
-@media(max-width:flex){.detail{grid-template-columns:1fr;margin-top:8px}.slide img{height:280px}}
+@media(max-width:980px){.detail{grid-template-columns:1fr;margin-top:8px}.slide img{height:280px}}
 </style>
 </head>
 <body>
@@ -82,16 +66,13 @@ body{margin:0;background:linear-gradient(180deg,#050505,#0b0b0b);color:#fff;min-
     </div>
   </div>
 
-     <!-- ===========================
-     MAIN
-     =========================== -->
- <main class="container">
+<main class="container">
   <section class="category-bar" id="categoryBar"></section>
 
-  <section class="hero"> 
+  <section class="hero">
     <div>
       <h1>Shop everything — great deals, delivered fast</h1>
-      <p class="small"> Buy the products • Admin: <span style="font-family:monospace">SAIKUMAR</span> / <span style="font-family:monospace">Admin@1221</span></p>
+      <p class="small"> Buy the products • Admin: <span style="font-family:monospace">SAIKUMAR</span></p>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
       <div class="kicker"> Refer Your friends</div>
@@ -99,60 +80,50 @@ body{margin:0;background:linear-gradient(180deg,#050505,#0b0b0b);color:#fff;min-
     </div>
   </section>
 
-  <main class="container">
-    <section id="listView">
-      <div class="category-bar" id="categoryBar"></div>
-      <h2 style="color:var(--gold)">All Products</h2>
-      <div id="grid" class="grid"></div>
-    </section>
+  <section id="listView">
+    <h2 style="color:var(--gold)">All Products</h2>
+    <div id="grid" class="grid"></div>
+  </section>
 
-    <section id="productView" class="hidden">
-      <button onclick="backToList()">← Back</button>
-      <div id="detailBox" class="detail"></div>
-      <h3 style="color:var(--gold);margin-top:12px">Similar products</h3>
-      <div id="similar" class="similar"></div>
-    </section>
+  <section id="productView" class="hidden">
+    <button onclick="backToList()">← Back</button>
+    <div id="detailBox" class="detail"></div>
+    <h3 style="color:var(--gold);margin-top:12px">Similar products</h3>
+    <div id="similar" class="similar"></div>
+  </section>
 
-     <section id="wishView" class="hidden">
+  <section id="wishView" class="hidden">
     <h2 style="color:var(--gold)">Wishlist</h2>
     <div id="wishList"></div>
   </section>
 
-    <section id="cartView" class="hidden">
-      <h2 style="color:var(--gold)">Your Cart</h2>
-      <div id="cartList"></div>
-      <div style="margin-top:12px"><button class="btn primary" onclick="checkout()">Place Order (Simulated)</button></div>
-    </section>
+  <section id="cartView" class="hidden">
+    <h2 style="color:var(--gold)">Your Cart</h2>
+    <div id="cartList"></div>
+    <div style="margin-top:12px"><button class="btn primary" onclick="checkout()">Place Order (Simulated)</button></div>
+  </section>
 
-    <section id="wishView" class="hidden">
-      <h2 style="color:var(--gold)">Wishlist</h2>
-      <div id="wishList"></div>
-    </section>
-
-    <section id="profileView" class="hidden">
-      <h2 style="color:var(--gold)">Profile</h2>
-      <div id="profileBox" class="card"></div>
-    </section>
-  </main>
+  <section id="profileView" class="hidden">
+    <h2 style="color:var(--gold)">Profile</h2>
+    <div id="profileBox" class="card"></div>
+  </section>
 
   <footer class="footer">© 2025 B3LAMS — Demo (all data stored in browser)</footer>
+</main>
 
 <script>
 /* Keys */
-const KEY_PRODUCTS='b3_products';
-const KEY_BUYERS='b3_buyers';
-const KEY_CUR='b3_currentBuyer';
-const KEY_REV='b3_reviews';
-const KEY_ORD='b3_orders';
+const KEY_PRODUCTS = 'b3_products';
+const KEY_BUYERS = 'b3_buyers';
+const KEY_CUR = 'b3_currentBuyer';
+const KEY_REV = 'b3_reviews';
+const KEY_ORD = 'b3_orders';
 
-/* Seed demo products if empty */
+/* Seed demo products only if empty (admin will normally set) */
 if(!localStorage.getItem(KEY_PRODUCTS)){
   const demo = [
-    { id:11101, name:'Smartphone Alpha', category:'Mobiles', price:19999, images:['https://via.placeholder.com/800x600?text=Smartphone+Alpha','https://via.placeholder.com/800x600?text=Smartphone+Alpha+2'], link:'https://www.flipkart.com' },
-    { id:11102, name:'Wireless Earbuds', category:'Electronics', price:2499, images:['https://via.placeholder.com/800x600?text=Earbuds'], link:'https://www.amazon.in' },
-    { id:11103, name:"Men's T-Shirt", category:'Fashion', price:599, images:['https://via.placeholder.com/800x600?text=T-Shirt'], link:'https://www.meesho.com' },
-    { id:11104, name:'Blender Mixer', category:'Home', price:3499, images:['https://via.placeholder.com/800x600?text=Blender'], link:'https://www.flipkart.com' },
-    { id:11105, name:'Yoga Mat', category:'Accessories', price:799, images:['https://via.placeholder.com/800x600?text=Yoga+Mat'], link:'https://www.amazon.in' }
+    { id:11101, name:'Smartphone Alpha', category:'Mobiles', price:19999, images:['https://via.placeholder.com/800x600?text=Smartphone+Alpha'], link:'https://www.flipkart.com' },
+    { id:11102, name:'Wireless Earbuds', category:'Electronics', price:2499, images:['https://via.placeholder.com/800x600?text=Earbuds'], link:'https://www.amazon.in' }
   ];
   localStorage.setItem(KEY_PRODUCTS, JSON.stringify(demo));
 }
@@ -176,7 +147,7 @@ function uniqueCategories(){
   return ['All',...cats];
 }
 function renderCategoryBar(){
-  categoryBar.innerHTML = uniqueCategories().map(c=><div class="cat" onclick="filterCat('${c}')">${c}</div>).join('');
+  categoryBar.innerHTML = uniqueCategories().map(c=>`<div class="cat" onclick="filterCat('${c}')">${c}</div>`).join('');
 }
 
 function renderGrid(list){
@@ -194,7 +165,7 @@ function renderGrid(list){
     <div class="small">${p.category || 'Misc'}</div>
     <div class="price">₹${p.price}</div>
     <div class="actions">
-      <button class="btn primary" onclick="buyNow('${p.link}')">Buy</button>
+      <button class="btn primary" onclick="buyNow('${encodeURI(p.link || '#')}')">Buy</button>
       <button class="btn" onclick="addToCart(${p.id})">Add</button>
       <button class="btn" onclick="toggleWish(${p.id})">${WISHLIST.includes(p.id)?'♥':'♡'}</button>
     </div>
@@ -208,27 +179,17 @@ function openProduct(id){
   const p = PRODUCTS.find(x=>x.id==id); if(!p) return alert('Product not found');
   hideAllSections(); document.getElementById('productView').classList.remove('hidden');
 
-  // slideshow
+  // slideshow images
   const imgs = p.images && p.images.length ? p.images : ['https://via.placeholder.com/800x600?text=Product'];
-  let idx = 0;
-  const slideHTML = `
-    <div class="slide">
-      <img id="slideImg" src="${imgs[0]}" alt="${p.name}">
-      <div class="nav">
-        <button onclick="(function(){ idx = idx-1<0?${imgs.length}-1:idx-1; document.getElementById('slideImg').src='${imgs[0]}'.replace('', '') ; document.getElementById('slideImg').src=imgs[idx]; })()">‹</button>
-        <button onclick="(function(){ idx = (idx+1)%${imgs.length}; document.getElementById('slideImg').src=imgs[idx]; })()">›</button>
-      </div>
-    </div>
-  `;
-
-  // reviews
-  const reviews = (REVIEWS[p.id] || []).slice().reverse();
-  const reviewsHtml = reviews.map(r=><div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.03)"><strong>${r.userName}</strong> · ${r.rating} ★ <div class="small">${new Date(r.date).toLocaleString()}</div><div>${escapeHtml(r.text||'')}</div>${r.image?<div style="margin-top:6px"><img src="${r.image}" style="max-width:180px;border-radius:6px"></div>:''}</div>).join('');
-
-  // detail layout
   document.getElementById('detailBox').innerHTML = `
     <div>
-      <div class="slide" id="slideContainer"></div>
+      <div class="slide" id="slideContainer">
+        <img id="slideImg" src="${imgs[0]}" style="width:100%;height:420px;object-fit:contain;border-radius:8px">
+        <div class="nav" style="position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between">
+          <button onclick="prevSlide()">‹</button>
+          <button onclick="nextSlide()">›</button>
+        </div>
+      </div>
       <div style="display:flex;gap:8px;margin-top:8px" id="thumbs"></div>
     </div>
     <div>
@@ -237,38 +198,29 @@ function openProduct(id){
       <h3 class="price">₹${p.price}</h3>
       <p class="small">${p.description || ''}</p>
       <div style="margin-top:12px;display:flex;gap:8px;">
-        <button class="btn primary" onclick="buyNow('${p.link}')">Buy on Store</button>
+        <button class="btn primary" onclick="buyNow('${encodeURI(p.link || '#')}')">Buy on Store</button>
         <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
         <button class="btn" onclick="toggleWish(${p.id})">${WISHLIST.includes(p.id)?'Remove Wishlist':'Add Wishlist'}</button>
       </div>
-
       <div style="margin-top:18px">
-        <h4>Reviews (${reviews.length})</h4>
-        <div id="reviewsArea">${reviewsHtml || '<p class="small">No reviews yet</p>'}</div>
-
-        <div style="margin-top:12px;border-top:1px dashed rgba(255,255,255,0.03);padding-top:12px">
-          <h4>Write a review</h4>
-          <select id="revRating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
-          <textarea id="revText" style="width:100%;height:70px;margin-top:8px;background:#0d0d0d;color:#fff;border-radius:8px;padding:8px;border:1px solid #222"></textarea>
-          <div style="margin-top:6px"><input id="revImage" type="file" accept="image/*"></div>
-          <div style="margin-top:8px"><button class="btn primary" onclick="submitReview(${p.id})">Submit Review</button></div>
-        </div>
+        <h4>Reviews</h4>
+        <div id="reviewsArea" class="small"></div>
       </div>
     </div>
   `;
 
-  // build thumbs and slideshow JS
-  const slideContainer = document.getElementById('slideContainer');
-  slideContainer.innerHTML = <img id="slideImg" src="${imgs[0]}" style="width:100%;height:420px;object-fit:contain;border-radius:8px"> <div class="nav" style="position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between"><button onclick="prevSlide()">‹</button><button onclick="nextSlide()">›</button></div>;
-  const thumbs = document.getElementById('thumbs'); thumbs.innerHTML = imgs.map((u,i)=><img src="${u}" style="width:80px;height:80px;object-fit:cover;border-radius:6px;cursor:pointer" onclick="document.getElementById('slideImg').src='${u}';currentSlide=${i}">).join('');
-  // expose imgs and index for nav functions
+  // thumbs
+  const thumbs = document.getElementById('thumbs');
+  thumbs.innerHTML = imgs.map((u,i)=>`<img src="${u}" style="width:80px;height:80px;object-fit:cover;border-radius:6px;cursor:pointer" onclick="document.getElementById('slideImg').src='${u}';currentSlide=${i}">`).join('');
   window._slideshowImgs = imgs; window.currentSlide = 0;
   window.prevSlide = function(){ window.currentSlide = window.currentSlide-1 < 0 ? window._slideshowImgs.length-1 : window.currentSlide-1; document.getElementById('slideImg').src = window._slideshowImgs[window.currentSlide]; }
   window.nextSlide = function(){ window.currentSlide = (window.currentSlide+1) % window._slideshowImgs.length; document.getElementById('slideImg').src = window._slideshowImgs[window.currentSlide]; }
 
-  // similar
   const similar = PRODUCTS.filter(x=>x.category === p.category && x.id!==p.id).slice(0,6);
-  document.getElementById('similar').innerHTML = similar.map(s=><div class="card" onclick="openProduct(${s.id})"><img src="${(s.images && s.images[0])||'https://via.placeholder.com/400'}"><div style="margin-top:6px"><strong>${s.name}</strong></div><div class="price">₹${s.price}</div></div>).join('');
+  document.getElementById('similar').innerHTML = similar.map(s=>`<div class="card" onclick="openProduct(${s.id})"><img src="${(s.images && s.images[0])||'https://via.placeholder.com/400'}"><div style="margin-top:6px"><strong>${s.name}</strong></div><div class="price">₹${s.price}</div></div>`).join('');
+  // show reviews
+  const reviews = (REVIEWS[p.id] || []).slice().reverse();
+  document.getElementById('reviewsArea').innerHTML = reviews.length ? reviews.map(r=>`<div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.03)"><strong>${r.userName}</strong> · ${r.rating} ★ <div class="small">${new Date(r.date).toLocaleString()}</div><div>${escapeHtml(r.text||'')}</div>${r.image?`<div style="margin-top:6px"><img src="${r.image}" style="max-width:180px;border-radius:6px"></div>`:''}</div>`).join('') : '<p class="small">No reviews yet</p>';
 }
 
 /* Cart */
@@ -282,13 +234,9 @@ function updateCartUI(){ document.getElementById('cartCount').textContent = CART
 function openCart(){
   hideAllSections(); document.getElementById('cartView').classList.remove('hidden');
   const items = PRODUCTS.filter(p=>CART.includes(p.id));
-  document.getElementById('cartList').innerHTML = items.map(it=><div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images&&it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="small">₹${it.price}</div></div><div style="margin-left:auto"><button class="btn" onclick="removeFromCart(${it.id})">Remove</button></div></div>).join('') || '<p class="small">Cart empty</p>';
+  document.getElementById('cartList').innerHTML = items.map(it=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images&&it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="small">₹${it.price}</div></div><div style="margin-left:auto"><button class="btn" onclick="removeFromCart(${it.id})">Remove</button></div></div>`).join('') || '<p class="small">Cart empty</p>';
 }
 function removeFromCart(id){ CART = CART.filter(x=>x!==id); persistBuyer(); openCart(); updateCartUI(); }
-
-// /* wishlist */
-// function toggleWish(id){ if(WISHLIST.includes(id)) WISHLIST = WISHLIST.filter(x=>x!==id); else WISHLIST.push(id); persistBuyer(); alert(WISHLIST.includes(id)?'Added to wishlist':'Removed from wishlist'); }
-// function openWishlist(){ hideAllSections(); document.getElementById('wishView').classList.remove('hidden'); const list = PRODUCTS.filter(p=>WISHLIST.includes(p.id)); document.getElementById('wishList').innerHTML = list.map(it=><div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images&&it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="price">₹${it.price}</div></div></div>).join('') || '<p class="small">Wishlist empty</p>'; }
 
 /* wishlist */
 function toggleWish(id){
@@ -297,13 +245,13 @@ function toggleWish(id){
   persistBuyer();
   alert(WISHLIST.includes(id)?'Added to wishlist':'Removed from wishlist');
 }
-function openWishlist(){ hideAllSections(); document.getElementById('wishView').classList.remove('hidden'); const list = PRODUCTS.filter(p=>WISHLIST.includes(p.id)); document.getElementById('wishList').innerHTML = list.map(it=><div class="card" style="display:flex;gap:12px;align-items:center"><img src="${it.image}" style="width:120px"><div><strong>${it.name}</strong><div class="price">₹${it.price}</div></div></div>).join('') || '<p class="small">Wishlist empty</p>'; }
+function openWishlist(){ hideAllSections(); document.getElementById('wishView').classList.remove('hidden'); const list = PRODUCTS.filter(p=>WISHLIST.includes(p.id)); document.getElementById('wishList').innerHTML = list.map(it=>`<div class="card" style="display:flex;gap:12px;align-items:center"><img src="${(it.images && it.images[0])||'https://via.placeholder.com/160'}" style="width:120px"><div><strong>${it.name}</strong><div class="price">₹${it.price}</div></div></div>`).join('') || '<p class="small">Wishlist empty</p>'; }
 
 /* profile */
 function openProfile(){ hideAllSections(); document.getElementById('profileView').classList.remove('hidden'); renderProfile(); }
 function renderProfile(){
   const me = JSON.parse(localStorage.getItem(KEY_CUR)||'null');
-  if(!me) return location.href='buyer-login.html';
+  if(!me) return location.href='buyer_login.html';
   document.getElementById('profileBox').innerHTML = `<div style="max-width:720px">
     <p><b>Name</b><br><input id="pf_name" value="${escapeHtml(me.name)}"></p>
     <p><b>Email</b><br><input id="pf_email" value="${escapeHtml(me.email)}"></p>
@@ -324,9 +272,7 @@ function saveProfile(){
   const newAddr = document.getElementById('pf_addr').value.trim();
   const oldPw = document.getElementById('pf_oldpw').value;
   const newPw = document.getElementById('pf_newpw').value;
-  // basic validation
   if(newPhone && !/^\d{10}$/.test(newPhone)) return alert('Phone must be 10 digits');
-  // change pw if provided
   if(oldPw || newPw){
     if(!oldPw || !newPw) return alert('Provide both old and new password to change');
     if(me.password !== oldPw) return alert('Old password incorrect');
@@ -334,7 +280,6 @@ function saveProfile(){
     me.password = newPw;
   }
   me.name = newName; me.email = newEmail; me.phone = newPhone; me.address = newAddr;
-  // update store
   let buyers = JSON.parse(localStorage.getItem(KEY_BUYERS)||'[]');
   const idx = buyers.findIndex(b=>b.id===me.id);
   if(idx>-1) buyers[idx]=me; else buyers.push(me);
@@ -366,9 +311,10 @@ function addReview(productId, rating, text, image){
 
 /* buy & checkout */
 function buyNow(link){
+  // open external store link in new tab/window
   if(!link || link === '#') return alert('No external link set for this product');
-  // record a simulated "intent" (could save which store)
-  window.open(link, '_blank');
+  // open original app / store
+  try{ window.open(decodeURI(link), '_blank'); } catch(e){ window.open(link, '_blank'); }
 }
 function checkout(){
   if(!CART.length) return alert('Cart empty');
@@ -379,7 +325,6 @@ function checkout(){
   me.orders = me.orders || []; me.orders.push(order); me.cart = []; CART=[]; persistBuyer();
   alert('Order placed (simulated). Order id: '+order.id);
   openProfile();
-  localStorage.setItem(KEY_ORD, JSON.stringify(orders));
 }
 
 /* helpers */
@@ -400,6 +345,7 @@ function persistBuyer(){
   if(idx>-1){ buyers[idx]=me; } else { buyers.push(me); }
   localStorage.setItem(KEY_BUYERS, JSON.stringify(buyers));
   localStorage.setItem(KEY_CUR, JSON.stringify(me));
+  // small key to notify cross-tab changes
   localStorage.setItem('b3_sync', Date.now());
 }
 
@@ -423,25 +369,12 @@ loadState();
 
 /* storage listener: admin changes */
 window.addEventListener('storage', (e)=>{
+  // admin or other tab changed products
   if(e.key === KEY_PRODUCTS || e.key === 'b3_sync'){
     PRODUCTS = JSON.parse(localStorage.getItem(KEY_PRODUCTS)||'[]');
     renderGrid(PRODUCTS);
   }
-
-
-
-  
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("Service worker registered"))
-    .catch(err => console.log("SW registration failed", err));
-}
-
-
-
+});
 </script>
 </body>
 </html>
-
-
-
