@@ -5,7 +5,7 @@
   "lang": "en-IN",
   "dir": "ltr",
   "orientation": "portrait",
-  "start_url": "https://B3L-MSAPP.com/",
+  "start_url": "/B3L-MSAPP/index.html/",
   "scope": "/B3L-MSAPP/",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen", "minimal-ui"],
