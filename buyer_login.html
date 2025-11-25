@@ -56,6 +56,30 @@ function forgot(){
   localStorage.setItem('b3_buyers', JSON.stringify(all));
   alert('Password reset — please login with new password');
 }
+
+  function setBuyerLogin(user){
+  let buyers = JSON.parse(localStorage.getItem("b3_buyers") || "[]");
+  const idx = buyers.findIndex(b => b.id === user.id);
+  if(idx > -1){
+    buyers[idx].lastLogin = new Date().toISOString();
+  } else {
+    buyers.push({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone || "",
+      address: user.address || "",
+      lastLogin: new Date().toISOString(),
+      ref: user.ref || ""
+    });
+  }
+  localStorage.setItem("b3_buyers", JSON.stringify(buyers));
+}
+
+
+  setBuyerLogin(currentUser);
+
 </script>
 </body>
 </html>
+
