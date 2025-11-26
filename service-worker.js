@@ -1,11 +1,15 @@
+
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.open("b3l-cache").then((cache) => {
+    caches.open("b3l-cache-v1").then((cache) => {
       return cache.addAll([
-        "/B3L-MSAPP/",
-        "/B3L-MSAPP/index.html",
-        "/B3L-MSAPP/manifest.json",
-        "/B3L-MSAPP/icons/icon-512.png"
+        "./",
+        "./index.html",
+        "./manifest.json",
+        "./icons/icon-192.png",
+        "./icons/icon-512.png",
+        "./css/style.css",
+        "./js/app.js"
       ]);
     })
   );
@@ -13,8 +17,8 @@ self.addEventListener("install", (e) => {
 
 self.addEventListener("fetch", (e) => {
   e.respondWith(
-    caches.match(e.request).then((response) => {
-      return response || fetch(e.request);
+    caches.match(e.request).then((res) => {
+      return res || fetch(e.request);
     })
   );
 });
