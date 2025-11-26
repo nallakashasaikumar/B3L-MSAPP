@@ -6,7 +6,7 @@
   "dir": "ltr",
   "orientation": "portrait",
   "start_url": "./index.html",
-  "scope": "/",
+  "scope": "./",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen", "minimal-ui"],
   
@@ -21,7 +21,7 @@
   ],
   "icons": [
     {
-      "src": "/B3L-MSAPP/icons/icon-512.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
@@ -29,14 +29,14 @@
 
   "screenshot": [
     {
-      "src": "/B3L-MSAPP/screenshot/screen1.png",
+      "src": "screenshot/screen1.png",
       "sizes": "1024x1536",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Mobile UI Home Screen"
     },
     {
-      "src": "/B3L-MSAPP/screenshot/screen1.png",
+      "src": "screenshot/screen1.png",
       "sizes": "1024x1536",
       "type": "image/png",
       "form_factor": "wide",
