@@ -5,7 +5,7 @@
   "lang": "en-IN",
   "dir": "ltr",
   "orientation": "portrait",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen", "minimal-ui"],
